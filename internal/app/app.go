@@ -25,7 +25,7 @@ func Run(configPath string) {
 		return
 	}
 
-	postgresClient, err := postgres.New("postgresql://root:secret@127.0.0.1:5434/root", postgres.MaxPoolSize(50))
+	postgresClient, err := postgres.New("postgresql://root:secret@127.0.0.1:5432/shotwot_test", postgres.MaxPoolSize(50))
 	if err != nil {
 		logger.Error(err)
 

@@ -11,6 +11,16 @@ type Handler struct {
 	services *service.Services
 }
 
+// Render for All Responses
+func (rd *Response) Render(w http.ResponseWriter, r *http.Request) error {
+	return nil
+}
+
+// Response is a wrapper response structure
+type Response struct {
+	Data interface{} `json:"data"`
+}
+
 func NewHandler(services *service.Services) *Handler {
 	return &Handler{
 		services: services,
@@ -19,8 +29,7 @@ func NewHandler(services *service.Services) *Handler {
 
 func (h *Handler) Init() http.Handler {
 	r := chi.NewRouter()
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hi"))
-	})
+	r.Mount("/users", h.initAccountsRoutes())
+
 	return r
 }

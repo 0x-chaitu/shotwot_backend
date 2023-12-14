@@ -5,6 +5,7 @@ go 1.21.3
 require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/go-chi/chi/v5 v5.0.10
+	github.com/go-chi/render v1.0.3
 	github.com/go-ozzo/ozzo-validation v3.6.0+incompatible
 	github.com/jackc/pgx/v4 v4.18.1
 	github.com/sirupsen/logrus v1.9.3
@@ -12,6 +13,7 @@ require (
 )
 
 require (
+	github.com/ajg/form v1.5.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20230301143203-a9d515a09cc2 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
