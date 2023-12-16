@@ -11,6 +11,7 @@ import (
 	"shotwot_backend/internal/repository"
 	"shotwot_backend/internal/server"
 	"shotwot_backend/internal/service"
+	"shotwot_backend/pkg/auth"
 	postgres "shotwot_backend/pkg/database"
 	"shotwot_backend/pkg/logger"
 	"syscall"
@@ -25,16 +26,24 @@ func Run(configPath string) {
 		return
 	}
 
-	postgresClient, err := postgres.New("postgresql://root:secret@127.0.0.1:5432/shotwot_test", postgres.MaxPoolSize(50))
+	postgresClient, err := postgres.New("postgresql://postgres:postgres@localhost:5432/shotwot", postgres.MaxPoolSize(50))
 	if err != nil {
 		logger.Error(err)
 
 		return
 	}
 	repos := repository.NewRepositories(postgresClient)
+	tokenManager, err := auth.NewManager(cfg.Auth.JWT.SigningKey)
+	if err != nil {
+		logger.Error(err)
+		return
+	}
 	services := service.NewServices(
 		service.Deps{
-			Repos: repos,
+			Repos:           repos,
+			TokenManager:    tokenManager,
+			AccessTokenTTL:  cfg.Auth.JWT.AccessTokenTTL,
+			RefreshTokenTTL: cfg.Auth.JWT.RefreshTokenTTL,
 		})
 	handlers := delivery.NewHandler(services)
 

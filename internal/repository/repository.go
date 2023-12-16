@@ -7,10 +7,10 @@ import (
 )
 
 type Accounts interface {
-	Create(ctx context.Context, user domain.Account) error
+	Create(ctx context.Context, user *domain.Account) error
 
 	//userIdentifier can be username, email
-	GetByCredentials(ctx context.Context, userIdentifier, password string) (domain.Account, error)
+	GetByCredentials(ctx context.Context, userIdentifier, password string) (*domain.Account, error)
 }
 
 type Repositories struct {
